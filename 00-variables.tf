@@ -1,22 +1,26 @@
 ##################################################
 # Shared
 variable "name_tag_convention" {
-  description = "Name tag convention"
+  description = "The name tag convention of all resources."
   type = object({
     project_name   = string
     stage          = string
   })
+  default = {
+    project_name = "tf"
+    stage        = "poc"
+  }
 }
 
 variable "additional_tag" {
-  description = "Additional tags for all resources created within a Terraform, e.g. Enviroment, System"
+  description = "Additional tags for all resources."
   type        = map(string)
   default     = {}
 }
 ##################################################
 
 ##################################################
-# ASG location
+# ASG
 variable "availability_zones" {
   description = "(optional)"
   type        = set(string)
@@ -50,7 +54,7 @@ variable "desired_capacity" {
 variable "enabled_metrics" {
   description = "(optional)"
   type        = set(string)
-  default     = null
+  default     = []
   # GroupDesiredCapacity, GroupInServiceCapacity, GroupPendingCapacity, 
   # GroupMinSize, GroupMaxSize, GroupInServiceInstances, GroupPendingInstances, 
   # GroupStandbyInstances, GroupStandbyCapacity, GroupTerminatingCapacity, 
@@ -60,7 +64,7 @@ variable "enabled_metrics" {
 variable "force_delete" {
   description = "(optional)"
   type        = bool
-  default     = null
+  default     = false
 }
 
 variable "health_check_grace_period" {
@@ -82,9 +86,9 @@ variable "launch_configuration" {
 }
 
 variable "load_balancers" {
-  description = "(optional)"
+  description = "(optional) For EC2-class"
   type        = set(string)
-  default     = null
+  default     = []
 }
 
 variable "max_instance_lifetime" {
@@ -141,7 +145,7 @@ variable "service_linked_role_arn" {
 variable "suspended_processes" {
   description = "(optional)"
   type        = set(string)
-  default     = null
+  default     = []
   # Launch, Terminate, HealthCheck, ReplaceUnhealthy, AZRebalance, 
   # AlarmNotification, ScheduledActions, AddToLoadBalancer
 }
@@ -161,7 +165,7 @@ variable "target_group_arns" {
 variable "termination_policies" {
   description = "(optional)"
   type        = list(string)
-  default     = null
+  default     = []
   # OldestInstance, NewestInstance, OldestLaunchConfiguration, 
   # ClosestToNextInstanceHour, OldestLaunchTemplate, AllocationStrategy, 
   # Default
